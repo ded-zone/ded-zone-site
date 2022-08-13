@@ -12,24 +12,21 @@ export const links: LinksFunction = () => [
 
 export default function Index() {
   return (
-    <main className="relative min-h-screen bg-gradient-to-t from-purple-900 to-purple-500 flex items-center">
-      <div className="grid grid-flow-row auto-rows-max w-screen justify-center gap-12 text-center">
+    <main className="relative flex min-h-screen items-center bg-gradient-to-t from-purple-900 to-purple-500">
+      <div className="grid w-screen grid-flow-row auto-rows-max justify-center gap-12 text-center">
         <div key={1} className="mx-auto">
-          <div className="h-64 w-64 bg-purple-400 rounded-full pointer-events-none select-none bg-origin-border bg-contain bg-aaron bg-center shadow-lg" />
+          <div className="pointer-events-none h-64 w-64 select-none rounded-full bg-purple-400 bg-aaron bg-contain bg-center bg-origin-border shadow-lg" />
         </div>
         <div key={2}>
-          <h1 className="text-white text-6xl font-thin">
+          <h1 className="text-6xl font-thin text-white">
             Aaron <span className="font-bold text-opacity-80">Dosser</span>
           </h1>
         </div>
         <div key={3}>
-          <h2 className="text-white text-5xl">Your next</h2>
+          <h2 className="text-4xl text-white">Your next</h2>
         </div>
-        <div key={4}>
-          <JobTitles
-            titles={["Full Stack Engineer", "Product Architect"]}
-            cycleTime={5000}
-          />
+        <div key={4} className="text-white">
+          <JobTitles />
         </div>
       </div>
     </main>

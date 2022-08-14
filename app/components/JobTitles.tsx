@@ -1,12 +1,14 @@
-import { AnimatePresence, LayoutGroup, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import type { Title } from "@prisma/client";
+import type { Variants } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
 
-const letterVariants = {
+const letterVariants: Variants = {
   hide: {
     y: 32,
     opacity: 0,
     transition: {
-      duration: 0.7,
+      duration: 0.3,
     },
   },
   hidden: {
@@ -17,94 +19,89 @@ const letterVariants = {
     y: 0,
     opacity: 1,
     transition: {
-      duration: 1,
+      duration: 0.3,
     },
   },
 };
 
-const lettersContainer = {
+const lettersContainer: Variants = {
   visible: {
-    transition: { staggerChildren: 0.25 },
+    transition: { staggerChildren: 0.05 },
   },
   hide: {
-    transition: { staggerChildren: 0.25 },
+    transition: { staggerChildren: 0.05 },
   },
 };
 
-export type JobTitlesProps = {
-  titles: JobTitle[];
+const Word = ({ word = "Hello" }) => {
+  return (
+    <div className="flex">
+      {word.split("").map((letter, i) => (
+        <motion.div
+          className="flex-nowrap"
+          key={`${letter}-${i}`}
+          variants={letterVariants}
+        >
+          {letter}
+        </motion.div>
+      ))}
+    </div>
+  );
 };
-
-interface JobTitle {
-  title: string;
-  id: string;
-}
-
-const defaultTitles: JobTitle[] = [
-  { id: "0", title: "Senior Software Engineer" },
-  { id: "1", title: "Product Architect" },
-  { id: "2", title: "Code Monkey" },
-  { id: "3", title: "Lead Developer" },
-  { id: "4", title: "Bug Squishing Expert" },
-  { id: "5", title: "Favorite Employee" },
-];
 
 interface WordsProps {
   words: string[];
 }
 
-const Word = ({ word = "Hello" }) => {
-  return (
-    <>
-      {word.split("").map((letter, i) => (
-        <motion.div key={`${letter}-${i}`} variants={letterVariants}>
-          {letter}
-        </motion.div>
-      ))}
-    </>
-  );
-};
-
 const Words = ({ words }: WordsProps) => {
   return (
-    <AnimatePresence exitBeforeEnter>
+    <div className="flex h-16 flex-wrap gap-3 justify-center items-start">
       {words.map((word) => (
-        <motion.div
-          key={word}
-          variants={lettersContainer}
-          initial="hidden"
-          animate="visible"
-          className="flex h-16"
-        >
+        <motion.div key={word} className="flex">
           <Word word={word} />
         </motion.div>
       ))}
-    </AnimatePresence>
+    </div>
   );
 };
 
-const JobTitles = ({ titles = defaultTitles }) => {
+export type JobTitlesProps = {
+  titles: Title[];
+  delay?: number;
+};
+
+const JobTitles = ({ titles, delay = 2000 }: JobTitlesProps) => {
   const [current, setCurrent] = useState(0);
-  const cycleTimer = useRef<NodeJS.Timer>();
   const currentTitle = titles[current];
   const words = currentTitle?.title.split(" ") ?? [];
 
-  useEffect(() => {
-    cycleTimer.current = setInterval(() => {
+  const onAnimationComplete = (animationName: string) => {
+    console.log(animationName);
+    if (animationName === "visible") {
       const next = current + 1;
-      setCurrent(titles[next] ? next : 0);
-    }, 5000);
-    return () => {
-      clearInterval(cycleTimer.current);
-    };
-  }, [current, setCurrent, titles]);
+      setTimeout(() => {
+        setCurrent(titles[next] ? next : 0);
+      }, delay);
+    }
+  };
 
   if (!currentTitle) return null;
 
   return (
-    <div id="job-title" className="flex justify-center gap-4 text-5xl">
-      <Words words={words} />
-    </div>
+    <AnimatePresence exitBeforeEnter>
+      <motion.div
+        key={words.join("")}
+        id="job-title"
+        variants={lettersContainer}
+        initial="hidden"
+        animate="visible"
+        exit="hide"
+        onAnimationComplete={onAnimationComplete}
+        className="flex justify-center text-5xl font-light"
+      >
+        <Words words={words} />
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

@@ -1,5 +1,4 @@
-import type { LinksFunction, LoaderArgs, MetaFunction } from "@remix-run/node";
-import { json } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -10,10 +9,12 @@ import {
 } from "@remix-run/react";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
-import { getUser } from "./session.server";
 
 export const links: LinksFunction = () => {
   return [
+    { rel: "icon", href: "/favicon.ico", sizes: "any" },
+    { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+    { rel: "manifest", href: "/site.webmanifest" },
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
     {
       rel: "preconnect",
@@ -21,7 +22,7 @@ export const links: LinksFunction = () => {
       crossOrigin: "anonymous",
     },
     {
-      href: "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;400;700&display=swap",
+      href: "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;700&display=swap",
       rel: "stylesheet",
     },
     { rel: "stylesheet", href: tailwindStylesheetUrl },
@@ -30,15 +31,10 @@ export const links: LinksFunction = () => {
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
-  title: "Remix Notes",
+  title: "Aaron Dosser | Portfolio",
   viewport: "width=device-width,initial-scale=1",
+  "theme-color": "rgb(168, 85, 247)",
 });
-
-export async function loader({ request }: LoaderArgs) {
-  return json({
-    user: await getUser(request),
-  });
-}
 
 export default function App() {
   return (

@@ -1,5 +1,14 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, LoaderFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import AaronAvatar from "~/components/AaronAvatar";
 import JobTitles from "~/components/JobTitles";
+import { getShuffledTitles } from "~/models/title.server";
+
+type LoaderData = Awaited<ReturnType<typeof getShuffledTitles>>;
+
+export const loader: LoaderFunction = async () =>
+  json<LoaderData>(await getShuffledTitles());
 
 export const links: LinksFunction = () => [
   {
@@ -11,11 +20,12 @@ export const links: LinksFunction = () => [
 ];
 
 export default function Index() {
+  const titles = useLoaderData<LoaderData>();
   return (
     <main className="relative flex min-h-screen items-center bg-gradient-to-t from-purple-900 to-purple-500">
-      <div className="grid w-screen grid-flow-row auto-rows-max justify-center gap-12 text-center">
+      <div className="grid w-screen grid-flow-row auto-rows-max justify-center text-center">
         <div key={1} className="mx-auto">
-          <div className="pointer-events-none h-64 w-64 select-none rounded-full bg-purple-400 bg-aaron bg-contain bg-center bg-origin-border shadow-lg" />
+          <AaronAvatar />
         </div>
         <div key={2}>
           <h1 className="text-6xl font-thin text-white">
@@ -23,10 +33,10 @@ export default function Index() {
           </h1>
         </div>
         <div key={3}>
-          <h2 className="text-4xl text-white">Your next</h2>
+          <h2 className="text-4xl pt-8 pb-4 text-white">Your next</h2>
         </div>
         <div key={4} className="text-white">
-          <JobTitles />
+          <JobTitles titles={titles} />
         </div>
       </div>
     </main>

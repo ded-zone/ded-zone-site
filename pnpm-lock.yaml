@@ -15,6 +15,7 @@ specifiers:
   '@testing-library/react': ^13.3.0
   '@testing-library/user-event': ^14.4.2
   '@types/bcryptjs': ^2.4.2
+  '@types/chance': ^1.1.3
   '@types/eslint': ^8.4.5
   '@types/node': ^18.6.4
   '@types/react': ^18.0.15
@@ -24,6 +25,7 @@ specifiers:
   bcryptjs: ^2.4.3
   binode: ^1.0.5
   c8: ^7.12.0
+  chance: ^1.1.8
   cookie: ^0.5.0
   cross-env: ^7.0.3
   cypress: ^10.4.0
@@ -57,6 +59,7 @@ dependencies:
   '@remix-run/serve': 1.6.7_biqbaboplfbrettd7655fr4n2y
   '@remix-run/server-runtime': 1.6.7_biqbaboplfbrettd7655fr4n2y
   bcryptjs: 2.4.3
+  chance: 1.1.8
   framer-motion: 7.1.0_biqbaboplfbrettd7655fr4n2y
   isbot: 3.5.0
   react: 18.2.0
@@ -73,6 +76,7 @@ devDependencies:
   '@testing-library/react': 13.3.0_biqbaboplfbrettd7655fr4n2y
   '@testing-library/user-event': 14.4.3_wl4iynrlixafokvgqnhzlvigei
   '@types/bcryptjs': 2.4.2
+  '@types/chance': 1.1.3
   '@types/eslint': 8.4.5
   '@types/node': 18.7.1
   '@types/react': 18.0.17
@@ -2148,6 +2152,10 @@ packages:
     resolution: {integrity: sha512-hC7OMnszpxhZPduX+m+nrx+uFoLkWOMiR4oa/AZF3MuSETYTZmFfJAHqZEM8MVlvfG7BEUcgvtwoCTxBp6hm3g==}
     dev: true
 
+  /@types/chance/1.1.3:
+    resolution: {integrity: sha512-X6c6ghhe4/sQh4XzcZWSFaTAUOda38GQHmq9BUanYkOE/EO7ZrkazwKmtsj3xzTjkLWmwULE++23g3d3CCWaWw==}
+    dev: true
+
   /@types/concat-stream/1.6.1:
     resolution: {integrity: sha512-eHE4cQPoj6ngxBZMvVf6Hw7Mh4jMW4U9lpGmS5GBPB9RYxlFg+CHaVN7ErNY4W9XfLIEn20b4VDYaIrbq0q4uA==}
     dependencies:
@@ -3188,6 +3196,10 @@ packages:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
     dev: true
+
+  /chance/1.1.8:
+    resolution: {integrity: sha512-v7fi5Hj2VbR6dJEGRWLmJBA83LJMS47pkAbmROFxHWd9qmE1esHRZW8Clf1Fhzr3rjxnNZVCjOEv/ivFxeIMtg==}
+    dev: false
 
   /character-entities-html4/2.1.0:
     resolution: {integrity: sha512-1v7fgQRj6hnSwFpq1Eu0ynr/CDEw0rXo2B61qXrLNdHZmPKgb7fqS1a2JwF0rISo9q77jDI8VMEHoApn8qDoZA==}

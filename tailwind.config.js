@@ -9,6 +9,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ["Noto Sans", "sans-serif"],
+        cursive: ["Pacifico", "cursive"],
       },
     },
   },

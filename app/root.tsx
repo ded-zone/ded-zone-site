@@ -7,6 +7,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { motion, AnimatePresence } from "framer-motion";
 
 import tailwindStylesheetUrl from "./styles/tailwind.css";
 
@@ -22,7 +23,7 @@ export const links: LinksFunction = () => {
       crossOrigin: "anonymous",
     },
     {
-      href: "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;700&display=swap",
+      href: "https://fonts.googleapis.com/css2?family=Noto+Sans:wght@100;300;400;700&family=Pacifico&display=swap",
       rel: "stylesheet",
     },
     { rel: "stylesheet", href: tailwindStylesheetUrl },
@@ -44,7 +45,9 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <Outlet />
+        <AnimatePresence>
+          <Outlet />
+        </AnimatePresence>
         <ScrollRestoration />
         <Scripts />
         <LiveReload />

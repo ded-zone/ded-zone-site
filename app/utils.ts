@@ -1,5 +1,6 @@
 import { useMatches } from "@remix-run/react";
 import { useMemo } from "react";
+import { Chance } from "chance";
 
 const DEFAULT_REDIRECT = "/";
 
@@ -41,3 +42,5 @@ export function useMatchesData(
   );
   return route?.data;
 }
+
+export const chance = new Chance();

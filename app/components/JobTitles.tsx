@@ -4,20 +4,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 
 const letterVariants: Variants = {
-  hide: {
-    y: 32,
+  hide: () => ({
     opacity: 0,
+    scale: 0,
     transition: {
       duration: 0.3,
     },
-  },
-  hidden: {
+  }),
+  hidden: () => ({
     y: -32,
     opacity: 0,
-  },
+    filter: "blur(5px)",
+  }),
   visible: {
     y: 0,
     opacity: 1,
+    rotateZ: 0,
+    filter: "blur(0px)",
     transition: {
       duration: 0.3,
     },
@@ -28,17 +31,13 @@ const lettersContainer: Variants = {
   visible: {
     transition: { staggerChildren: 0.05 },
   },
-  hide: {
-    transition: { staggerChildren: 0.05 },
-  },
 };
 
 const Word = ({ word = "Hello" }) => {
   return (
-    <div className="flex">
+    <div className="inline-flex items-center justify-center">
       {word.split("").map((letter, i) => (
         <motion.div
-          className="flex-nowrap"
           key={`${letter}-${i}`}
           variants={letterVariants}
         >
@@ -55,7 +54,7 @@ interface WordsProps {
 
 const Words = ({ words }: WordsProps) => {
   return (
-    <div className="flex h-16 flex-wrap gap-3 justify-center items-start">
+    <div className="flex h-12 flex-wrap gap-2 sm:gap-3 justify-center items-center">
       {words.map((word) => (
         <motion.div key={word} className="flex">
           <Word word={word} />
@@ -70,13 +69,17 @@ export type JobTitlesProps = {
   delay?: number;
 };
 
-const JobTitles = ({ titles, delay = 2000 }: JobTitlesProps) => {
+const defaultTitles: Title[] = [{ id: "a", title: "Lead Developer" }];
+
+const JobTitles = ({
+  titles = defaultTitles,
+  delay = 2000,
+}: JobTitlesProps) => {
   const [current, setCurrent] = useState(0);
   const currentTitle = titles[current];
   const words = currentTitle?.title.split(" ") ?? [];
 
   const onAnimationComplete = (animationName: string) => {
-    console.log(animationName);
     if (animationName === "visible") {
       const next = current + 1;
       setTimeout(() => {
@@ -97,7 +100,7 @@ const JobTitles = ({ titles, delay = 2000 }: JobTitlesProps) => {
         animate="visible"
         exit="hide"
         onAnimationComplete={onAnimationComplete}
-        className="flex justify-center text-5xl font-light"
+        className="flex justify-center text-3xl sm:text-5xl font-light"
       >
         <Words words={words} />
       </motion.div>
